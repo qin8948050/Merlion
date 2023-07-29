@@ -37,6 +37,7 @@ def plot_anoms(ax: plt.Axes, anomaly_labels: TimeSeries):
     splits = np.concatenate(([0], splits, [len(y) - 1]))
     for k in range(len(splits) - 1):
         if y[splits[k]]:  # If splits[k] is anomalous
+            print(t[splits(k)])
             ax.axvspan(t[splits[k]], t[splits[k + 1]], color="#e07070", alpha=0.5)
     return ax
 
