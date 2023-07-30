@@ -5,47 +5,31 @@
 # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 #
 """
-Datasets for time series anomaly detection (TSAD). All the time series in these
-datasets have anomaly labels.
+Datasets for time series forecasting. Really, these are just time series with
+no labels of any sort.
 """
-from ts_datasets.anomaly.base import TSADBaseDataset
-from ts_datasets.anomaly.custom import CustomAnomalyDataset
-from ts_datasets.anomaly.iops_competition import IOpsCompetition
-from ts_datasets.anomaly.nab import NAB
-from ts_datasets.anomaly.synthetic import Synthetic
-from ts_datasets.anomaly.ucr import UCR
+from ts_datasets.base import BaseDataset
+from ts_datasets.forecast.custom import CustomDataset
+from ts_datasets.forecast.m4 import M4
+from ts_datasets.forecast.energy_power import EnergyPower
+from ts_datasets.forecast.seattle_trail import SeattleTrail
+from ts_datasets.forecast.solar_plant import SolarPlant
 
-from ts_datasets.anomaly.smd import SMD
-from ts_datasets.anomaly.smap import SMAP
-from ts_datasets.anomaly.msl import MSL
-
-__all__ = [
-    "get_dataset",
-    "TSADBaseDataset",
-    "CustomAnomalyDataset",
-    "IOpsCompetition",
-    "NAB",
-    "Synthetic",
-    "UCR",
-    "SMD",
-    "SMAP",
-    "MSL",
-]
+__all__ = ["get_dataset", "CustomDataset", "M4", "EnergyPower", "SeattleTrail", "SolarPlant"]
 
 
-def get_dataset(dataset_name: str, rootdir: str = None, **kwargs) -> TSADBaseDataset:
+def get_dataset(dataset_name: str, rootdir: str = None, **kwargs) -> BaseDataset:
     """
     :param dataset_name: the name of the dataset to load, formatted as
-        ``<name>`` or ``<name>_<subset>``, e.g. ``IOPsCompetition``
-        or ``NAB_realAWSCloudwatch``
+        ``<name>`` or ``<name>_<subset>``, e.g. ``EnergyPower`` or ``M4_Hourly``
     :param rootdir: the directory where the desired dataset is stored. Not
-        required if the package :py:mod:`ts_datasets` is installed in editable
+        required if the package :py:mod:`ts_datasetsa` is installed in editable
         mode, i.e. with flag ``-e``.
     :param kwargs: keyword arguments for the data loader you are trying to load.
     :return: the data loader for the desired dataset (and subset) desired
     """
     name_subset = dataset_name.split("_", maxsplit=1)
-    valid_datasets = set(__all__).difference({"TSADBaseDataset", "get_dataset"})
+    valid_datasets = set(__all__).difference({"get_dataset"})
     if name_subset[0] in valid_datasets:
         cls = globals()[name_subset[0]]
     else:

@@ -48,7 +48,6 @@ class NAB(TSADBaseDataset):
         super().__init__()
         assert subset in self.valid_subsets, f"subset should be in {self.valid_subsets}, but got {subset}"
         self.subset = subset
-
         if rootdir is None:
             fdir = os.path.dirname(os.path.abspath(__file__))
             merlion_root = os.path.abspath(os.path.join(fdir, "..", "..", ".."))
@@ -70,12 +69,12 @@ class NAB(TSADBaseDataset):
             subsets = [subset]
         self.download(rootdir, subsets)
         dsetdirs = [os.path.join(rootdir, s) for s in subsets]
-
         labelfile = os.path.join(rootdir, "labels/combined_windows.json")
         with open(labelfile) as json_file:
             label_list = json.load(json_file)
 
         csvs = sum([sorted(glob.glob(f"{d}/*.csv")) for d in dsetdirs], [])
+        print(f"csvs:{csvs}")
         for i, csv in enumerate(sorted(csvs)):
             df = pd.read_csv(csv)
             df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
@@ -84,7 +83,8 @@ class NAB(TSADBaseDataset):
                 df = df.drop_duplicates(subset="timestamp", keep="first")
                 logger.warning(f"Time series {csv} (index {i}) has timestamp duplicates. Kept first values.")
 
-            all_dt = np.unique(np.diff(df["timestamp"])).astype(np.int64)
+            # all_dt = np.unique(np.diff(df["timestamp"])).astype(np.int64)
+            all_dt = np.unique(np.diff(df["timestamp"]))
             gcd_dt = all_dt[0]
             for dt in all_dt[1:]:
                 gcd_dt = np.gcd(gcd_dt, dt)
