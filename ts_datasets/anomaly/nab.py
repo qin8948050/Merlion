@@ -74,7 +74,7 @@ class NAB(TSADBaseDataset):
             label_list = json.load(json_file)
 
         csvs = sum([sorted(glob.glob(f"{d}/*.csv")) for d in dsetdirs], [])
-        print(f"csvs:{csvs}")
+        # print(f"csvs:{csvs}")
         for i, csv in enumerate(sorted(csvs)):
             df = pd.read_csv(csv)
             df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
@@ -101,6 +101,7 @@ class NAB(TSADBaseDataset):
 
             md_cols = ["anomaly", "trainval"]
             self.metadata.append(df[md_cols])
+            self.files.append(csv)
             self.time_series.append(df[[c for c in df.columns if c not in md_cols]])
 
     @staticmethod

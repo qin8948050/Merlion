@@ -43,14 +43,14 @@ class BaseDataset:
     """
     A list containing the metadata for all individual time series in the dataset.
     """
-
+    files: list
     def __init__(self):
         self.subset = None
         self.time_series = []
         self.metadata = []
-
-    def __getitem__(self, i) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        return self.time_series[i], self.metadata[i]
+        self.files = []
+    def __getitem__(self, i) -> Tuple[pd.DataFrame, pd.DataFrame,str]:
+        return self.time_series[i], self.metadata[i],self.files[i]
 
     def __len__(self):
         return len(self.time_series)
