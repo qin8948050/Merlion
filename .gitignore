@@ -17,3 +17,6 @@ Icon?
 docs/build/*
 .ipynb_checkpoints
 venv/
+build
+ts_datasets/*
+data

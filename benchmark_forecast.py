@@ -29,8 +29,8 @@ from merlion.transform.resample import TemporalResample, granularity_str_to_seco
 from merlion.utils import TimeSeries, UnivariateTimeSeries
 from merlion.utils.resample import infer_granularity, to_pd_datetime
 
-from ts_datasets.base import BaseDataset
-from ts_datasets.forecast import *
+from ts_datasetsa.base import BaseDataset
+from ts_datasetsa.forecast import *
 
 import matplotlib.pyplot as plt
 
@@ -50,13 +50,13 @@ def parse_args():
         description="Script to benchmark various Merlion forecasting models on "
         "univariate forecasting task. This file assumes that "
         "you have pip installed both merlion (this repo's main "
-        "package) and ts_datasets (a sub-repo)."
+        "package) and ts_datasetsa (a sub-repo)."
     )
     parser.add_argument(
         "--dataset",
         default="M4_Hourly",
         help="Name of dataset to run benchmark on. See get_dataset() "
-        "in ts_datasets/ts_datasets/forecast/__init__.py for "
+        "in ts_datasetsa/ts_datasetsa/forecast/__init__.py for "
         "valid options.",
     )
     parser.add_argument("--data_root", default=None, help="Root directory/file of dataset.")

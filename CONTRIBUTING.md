@@ -124,12 +124,12 @@ new module to the Sphinx ReST file [`docs/source/merlion.transform.rst`](docs/so
 
 ## Datasets
 You can add support for a new dataset of time series by implementing an appropriate data loading class in
-[`ts_datasets`](ts_datasets), and uploading the raw data (potentially compressed) to the [`data`](data) directory.
-If your dataset has labeled anomalies, it belongs in [`ts_datasets.anomaly`](ts_datasets/ts_datasets/anomaly). If it
-does not have labeled anomalies, it belongs in [`ts_datasets.forecast`](ts_datasets/ts_datasets/forecast). See the
+[`ts_datasets`](ts_datasetsa), and uploading the raw data (potentially compressed) to the [`data`](data) directory.
+If your dataset has labeled anomalies, it belongs in [`ts_datasets.anomaly`](ts_datasetsa/ts_datasets/anomaly). If it
+does not have labeled anomalies, it belongs in [`ts_datasets.forecast`](ts_datasetsa/ts_datasets/forecast). See the
 [API docs](https://opensource.salesforce.com/Merlion/ts_datasets.html) for more details.
 
 Once you've implemented your data loader class, add it to the top-level namespace of the module
-([`ts_datasets/ts_datasets/anomaly/__init__.py`](ts_datasets/ts_datasets/anomaly/__init__.py) or
-[`ts_datasets/ts_datasets/forecast/__init__.py`](ts_datasets/ts_datasets/forecast/__init__.py)) by importing it
+([`ts_datasets/ts_datasets/anomaly/__init__.py`](ts_datasetsa/ts_datasets/anomaly/__init__.py) or
+[`ts_datasets/ts_datasets/forecast/__init__.py`](ts_datasetsa/ts_datasets/forecast/__init__.py)) by importing it
 and adding it to `__all__`. 

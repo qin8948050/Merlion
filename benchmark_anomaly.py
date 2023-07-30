@@ -33,7 +33,7 @@ from merlion.transform.resample import TemporalResample
 from merlion.utils import TimeSeries
 from merlion.utils.resample import to_pd_datetime
 
-from ts_datasets.anomaly import *
+from ts_datasetsa.anomaly import *
 
 logger = logging.getLogger(__name__)
 
@@ -51,14 +51,14 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Script to benchmark Merlion time series anomaly detection "
         "models. This script assumes that you have pip installed "
-        "both merlion (this repo's main package) and ts_datasets "
+        "both merlion (this repo's main package) and ts_datasetsa "
         "(a sub-repo)."
     )
     parser.add_argument(
         "--dataset",
         default="NAB_all",
         help="Name of dataset to run benchmark on. See get_dataset() "
-        "in ts_datasets/ts_datasets/anomaly/__init__.py for "
+        "in ts_datasetsa/ts_datasetsa/anomaly/__init__.py for "
         "valid options.",
     )
     parser.add_argument("--data_root", default=None, help="Root directory/file of dataset.")

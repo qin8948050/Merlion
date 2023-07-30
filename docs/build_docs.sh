@@ -45,7 +45,7 @@ mkdir -p "${DIRNAME}/build" "${DIRNAME}/build/html"
 git --work-tree "${DIRNAME}/build/html" checkout gh-pages . && git reset --hard
 python3 "${DIRNAME}/process_old_docs.py"
 
-# Install all released versions of Merlion/ts_datasets _not_ on gh-pages and use them to build the appropriate API docs.
+# Install all released versions of Merlion/ts_datasetsa _not_ on gh-pages and use them to build the appropriate API docs.
 # Uninstall after we're done with each one.
 versions=("latest")
 for v in $(git tag --list 'v[0-9]*'); do
@@ -65,10 +65,10 @@ for version in "${versions[@]}"; do
         fi
         export current_version=${version}
         pip3 install ".[all]"
-        pip3 install ts_datasets/
+        pip3 install ts_datasetsa/
         sphinx-build -b html "${DIRNAME}/source" "${DIRNAME}/build/html/${current_version}" -W --keep-going
         rm -rf "${DIRNAME}/build/html/${current_version}/.doctrees"
-        pip3 uninstall -y salesforce-merlion ts_datasets
+        pip3 uninstall -y salesforce-merlion ts_datasetsa
         git reset --hard && git checkout --force "${GIT_HEAD}"
     fi
 done
