@@ -69,7 +69,7 @@ def click_run(btn_click, modal_close, filename, data):
     stats = json.loads(data) if data is not None else {}
 
     stats_table = create_stats_table()
-    data_table = DataAnalyzer.get_data_table(df=None)
+    data_table = DataAnalyzer.get_data_table(df=None,)
     data_figure = DataAnalyzer.get_data_figure(df=None)
     modal_is_open = False
     modal_content = ""
@@ -79,11 +79,11 @@ def click_run(btn_click, modal_close, filename, data):
         try:
             assert filename, "Please select a file to load."
             file_path = os.path.join(file_manager.data_directory, filename)
-            df = DataAnalyzer().load_data(file_path)
+            df,df2 = DataAnalyzer().load_data(file_path)
             stats = DataAnalyzer.get_stats(df)
             stats_table = create_stats_table(stats)
             data_table = DataAnalyzer.get_data_table(df)
-            data_figure = DataAnalyzer.get_data_figure(df)
+            data_figure = DataAnalyzer.get_data_figure(df,df2)
 
         except Exception:
             error = traceback.format_exc()

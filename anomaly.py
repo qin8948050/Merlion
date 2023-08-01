@@ -1,7 +1,7 @@
 def init_model():
     # Import models & configs
-    from merlion.models.anomaly.isolation_forest import IsolationForest, IsolationForestConfig
-    from merlion.models.anomaly.windstats import WindStats, WindStatsConfig
+    from merlion.models.anomaly.forecast_based.arima import Arima, ArimaConfig
+    from merlion.models.anomaly.forecast_based.ets import ETS, ETSConfig
     from merlion.models.anomaly.forecast_based.prophet import ProphetDetector, ProphetDetectorConfig
 
     # Import a post-rule for thresholding
@@ -17,15 +17,15 @@ def init_model():
     # noisiness when firing alerts).
 
     # We initialize isolation forest using the default config
-    config1 = IsolationForestConfig()
-    model1 = IsolationForest(config1)
+    config1 = ArimaConfig()
+    model1 = Arima(config1)
 
     # We use a WindStats model that splits each week into windows of 60 minutes
     # each. Anomaly scores in Merlion correspond to z-scores. By default, we would
     # like to fire an alert for any 4-sigma event, so we specify a threshold rule
     # which achieves this.
-    config2 = WindStatsConfig(wind_sz=60, threshold=AggregateAlarms(alm_threshold=4))
-    model2 = WindStats(config2)
+    config2 = ETSConfig()
+    model2 = ETS(config2)
 
     # Prophet is a popular forecasting algorithm. Here, we specify that we would like
     # to pre-processes the input time series by applying a difference transform,

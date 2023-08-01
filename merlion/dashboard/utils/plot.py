@@ -40,7 +40,7 @@ def data_table(df, n=1000, page_size=10):
         return dash_table.DataTable()
 
 
-def plot_timeseries(ts, figure_height=500):
+def plot_timeseries(ts, ts2=None,figure_height=500):
     traces = []
     color_list = plotly.colors.qualitative.Dark24
     for i, col in enumerate(ts.columns):
@@ -49,7 +49,13 @@ def plot_timeseries(ts, figure_height=500):
             v = v.astype(float)
             color = color_list[i % len(color_list)]
             traces.append(go.Scatter(name=col, x=v.index, y=v.values.flatten(), mode="lines", line=dict(color=color)))
-
+    if ts2 is not None and not ts2.empty:
+        for i, col in enumerate(ts2.columns):
+            v = ts2[col]
+            if v.dtype in ["int", "float", "bool"]:
+                v = v.astype(float)
+                color = color_list[i % len(color_list)]
+                traces.append(go.Scatter(name="anomaly", x=v.index, y=v.values.flatten(),fillcolor="red",line=dict(color='red',width=1.0,),mode='lines',opacity=0.8))
     layout = dict(
         showlegend=True,
         xaxis=dict(
@@ -76,7 +82,7 @@ def plot_timeseries(ts, figure_height=500):
         height=figure_height,
         xaxis_rangeselector_font_color="white",
         xaxis_rangeselector_activecolor="#0176D3",
-        xaxis_rangeselector_bgcolor="#1B96FF",
+        xaxis_rangeselector_bgcolor="#1B96F1",
         xaxis_rangeselector_font_family="Salesforce Sans",
     )
     return dcc.Graph(figure=fig)
