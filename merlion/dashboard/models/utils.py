@@ -19,17 +19,17 @@ class DataMixin:
         if nrows is None:
             self.logger.info("Loading the time series...")
         df = pd.read_csv(file_path, nrows=nrows)
-        df1=df[df.timestamp>"2014-04-16 03:24:00"]
-        df2=df1[df1.timestamp<"2014-04-16 14:19:00"]
+        # df1=df[df.timestamp>"2014-04-16 03:24:00"]
+        # df2=df1[df1.timestamp<"2014-04-16 14:19:00"]
         index_type = df.dtypes[df.columns[0]]
         df = df.set_index(df.columns[0])
         df.index = pd.to_datetime(df.index.values, unit="ms" if index_type in [np.int32, np.int64] else None)
-        #异常数据
-        index_type2 = df2.dtypes[df2.columns[0]]
-        df2 = df2.set_index(df2.columns[0])
-        df2.index = pd.to_datetime(df2.index.values, unit="ms" if index_type2 in [np.int32, np.int64] else None)
+        # #异常数据
+        # index_type2 = df2.dtypes[df2.columns[0]]
+        # df2 = df2.set_index(df2.columns[0])
+        # df2.index = pd.to_datetime(df2.index.values, unit="ms" if index_type2 in [np.int32, np.int64] else None)
 
-        return df,df2
+        return df
 
 
 class ModelMixin:

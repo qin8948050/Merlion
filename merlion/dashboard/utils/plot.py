@@ -40,7 +40,7 @@ def data_table(df, n=1000, page_size=10):
         return dash_table.DataTable()
 
 
-def plot_timeseries(ts, ts2=None,figure_height=500):
+def plot_timeseries(ts,figure_height=500):
     traces = []
     color_list = plotly.colors.qualitative.Dark24
 
@@ -50,10 +50,10 @@ def plot_timeseries(ts, ts2=None,figure_height=500):
             v = v.astype(float)
             color = color_list[i % len(color_list)]
             traces.append(go.Scatter(name=col, x=v.index, y=v.values.flatten(), mode="lines", line=dict(color=color)))
-            x0_index = v.index.get_loc("2014-04-16 03:24:00")
-            x1_index = v.index.get_loc("2014-04-16 14:19:00")
-            print(x0_index,x1_index)
-            traces.append(go.Scatter(name="anomaly", x=v.index[x0_index:x1_index+7], y=v.values[x0_index:x1_index].flatten(), mode="lines", line=dict(color="rgba(255, 0, 0, 0.8)")))
+            #异常子序列
+            # x0_index = v.index.get_loc("2014-04-16 03:24:00")
+            # x1_index = v.index.get_loc("2014-04-16 14:19:00")
+            # traces.append(go.Scatter(name="anomaly", x=v.index[x0_index:x1_index+7], y=v.values[x0_index:x1_index].flatten(), mode="lines", line=dict(color="rgba(255, 0, 0, 0.8)")))
     layout = dict(
         showlegend=True,
         xaxis=dict(
@@ -83,4 +83,8 @@ def plot_timeseries(ts, ts2=None,figure_height=500):
         xaxis_rangeselector_bgcolor="#1B96F1",
         xaxis_rangeselector_font_family="Salesforce Sans",
     )
+    #标注异常
+    fig.add_vrect(x0="2014-04-16 03:24:00", x1="2014-04-16 14:19:00",
+                  annotation_text="", annotation_position="top left",
+                  fillcolor="red", opacity=0.5, line_width=0)
     return dcc.Graph(figure=fig)
