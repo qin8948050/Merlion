@@ -43,19 +43,17 @@ def data_table(df, n=1000, page_size=10):
 def plot_timeseries(ts, ts2=None,figure_height=500):
     traces = []
     color_list = plotly.colors.qualitative.Dark24
+
     for i, col in enumerate(ts.columns):
         v = ts[col]
         if v.dtype in ["int", "float", "bool"]:
             v = v.astype(float)
             color = color_list[i % len(color_list)]
             traces.append(go.Scatter(name=col, x=v.index, y=v.values.flatten(), mode="lines", line=dict(color=color)))
-    if ts2 is not None and not ts2.empty:
-        for i, col in enumerate(ts2.columns):
-            v = ts2[col]
-            if v.dtype in ["int", "float", "bool"]:
-                v = v.astype(float)
-                color = color_list[i % len(color_list)]
-                traces.append(go.Scatter(name="anomaly", x=v.index, y=v.values.flatten(),fillcolor="red",line=dict(color='red',width=1.0,),mode='lines',opacity=0.8))
+            x0_index = v.index.get_loc("2014-04-16 03:24:00")
+            x1_index = v.index.get_loc("2014-04-16 14:19:00")
+            print(x0_index,x1_index)
+            traces.append(go.Scatter(name="anomaly", x=v.index[x0_index:x1_index+7], y=v.values[x0_index:x1_index].flatten(), mode="lines", line=dict(color="rgba(255, 0, 0, 0.8)")))
     layout = dict(
         showlegend=True,
         xaxis=dict(
